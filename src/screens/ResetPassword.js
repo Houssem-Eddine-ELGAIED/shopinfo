@@ -16,7 +16,7 @@ function ResetPasswordScreen() {
       return;
     }
     try {
-      const { data } = await Axios.post(`/api/users/resetpassword/${token}`, { password: newPassword });
+      const { data } = await Axios.post(`${process.env.REACT_APP_API_URL}/api/users/resetpassword/${token}`, { password: newPassword });
       toast.success(data.message);
       navigate('/signin');
     } catch (error) {

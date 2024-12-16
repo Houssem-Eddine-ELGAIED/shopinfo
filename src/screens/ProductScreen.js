@@ -67,7 +67,7 @@ export default function ProductScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get(`/api/products/slug/${slug}`);
+        const result = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/slug/${slug}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (error) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(error) });
@@ -83,7 +83,7 @@ export default function ProductScreen() {
   const addToCartHandler = async () => {
     const itemExist = cart.cartItems.find((x) => x._id === product._id);
     const quantity = itemExist ? itemExist.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${product._id}`);
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/${product._id}`);
     if (data.countInStock < quantity) {
       window.alert('Sorry. This product is out of stock');
       return;   
@@ -102,8 +102,7 @@ export default function ProductScreen() {
       return;
     }
     try {
-      const { data } = await axios.post(
-        `/api/products/${product._id}/reviews`,
+      const { data } = await axios.post( `${process.env.REACT_APP_API_URL}/api/products/${product._id}/reviews`,
         { rating, comment, name: userInfo.name },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },

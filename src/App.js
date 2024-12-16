@@ -43,7 +43,7 @@ import ContactScreen from './screens/ContactScreen';
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { fullBox, cart, userInfo } = state;
-
+  
   const signoutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
@@ -58,7 +58,7 @@ function App() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(`/api/products/categories`);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/categories`);
         setCategories(data);
       } catch (error) {
         toast.error(getError(error));
